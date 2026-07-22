@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- EDM-23: Modo oscuro revertido. Landing page con fondo blanco fijo. -->
+
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -19,18 +19,37 @@
     --text: #0a0e1a;
     --text-muted: #64748b;
     --text-dim: #94a3b8;
+    --input-bg: #ffffff;
+    --modal-bg: #ffffff;
+  }
+  html.dark {
+    --bg: #0a0e1a;
+    --bg2: #0f1526;
+    --surface: #141b2e;
+    --red: #E5261F;
+    --red-hover: #cc1f19;
+    --red-glow: rgba(229,38,31,0.08);
+    --border: rgba(255,255,255,0.08);
+    --text: #ffffff;
+    --text-muted: #94a3b8;
+    --text-dim: #94a3b8;
+    --input-bg: #141b2e;
+    --modal-bg: #141b2e;
   }
   html { scroll-behavior: smooth; }
-  body { background: var(--bg); font-family: 'Inter', system-ui, sans-serif; color: var(--text); min-height: 100vh; display: grid; grid-template-rows: auto 1fr auto; }
+  body { background: var(--bg); font-family: 'Inter', system-ui, sans-serif; color: var(--text); min-height: 100vh; display: grid; grid-template-rows: auto 1fr auto; transition: background-color 0.3s ease, color 0.3s ease; }
   header { padding: 24px 48px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); background: var(--bg2); }
-  .logo { font-size: 20px; font-weight: 900; color: #0a0e1a; letter-spacing: -0.02em; }
+  .header-left { display: flex; align-items: center; gap: 24px; }
+  .logo { font-size: 20px; font-weight: 900; color: var(--text); letter-spacing: -0.02em; }
   .logo span { color: var(--red); }
+  .theme-toggle { width: 36px; height: 36px; border-radius: 50%; background: var(--surface); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 18px; transition: background-color 0.2s, border-color 0.2s; }
+  .theme-toggle:hover { opacity: 0.8; }
   .header-badge { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red); border: 1px solid rgba(229,38,31,0.3); padding: 5px 12px; border-radius: 20px; background: var(--red-glow); }
   main { display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100vh - 80px - 60px); }
   .hero { padding: 80px 64px; display: flex; flex-direction: column; justify-content: center; }
   .hero-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--red); margin-bottom: 24px; display: flex; align-items: center; gap: 8px; }
   .hero-eyebrow::before { content: ''; width: 24px; height: 2px; background: var(--red); display: inline-block; }
-  .hero h1 { font-size: clamp(36px, 4vw, 52px); font-weight: 900; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 12px; }
+  .hero h1 { font-size: clamp(36px, 4vw, 52px); font-weight: 900; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 12px; color: var(--text); }
   .hero h1 span { color: var(--red); display: block; }
   .hero-sub { font-size: 16px; color: var(--text-muted); margin-bottom: 48px; line-height: 1.6; }
   .meta { display: flex; flex-direction: column; gap: 10px; margin-bottom: 52px; }
@@ -40,17 +59,17 @@
   .speakers { display: flex; flex-direction: column; gap: 10px; }
   .speaker { display: flex; align-items: center; gap: 12px; }
   .speaker-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--red-glow); border: 1px solid rgba(229,38,31,0.2); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--red); flex-shrink: 0; }
-  .speaker-info h4 { font-size: 13px; font-weight: 600; }
+  .speaker-info h4 { font-size: 13px; font-weight: 600; color: var(--text); }
   .speaker-info p { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
   .hero-divider { width: 1px; background: var(--border); }
   .form-panel { padding: 80px 64px; display: flex; flex-direction: column; justify-content: center; background: var(--bg2); }
   .form-header { margin-bottom: 36px; }
-  .form-header h2 { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+  .form-header h2 { font-size: 22px; font-weight: 800; margin-bottom: 6px; color: var(--text); }
   .form-header p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
   form { display: flex; flex-direction: column; gap: 16px; }
   .field { display: flex; flex-direction: column; gap: 6px; }
   label { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
-  input { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; font-size: 14px; font-family: 'Inter', sans-serif; color: var(--text); outline: none; transition: border-color 0.2s, box-shadow 0.2s; width: 100%; }
+  input { background: var(--input-bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; font-size: 14px; font-family: 'Inter', sans-serif; color: var(--text); outline: none; transition: border-color 0.2s, box-shadow 0.2s, background-color 0.3s, color 0.3s; width: 100%; }
   input::placeholder { color: var(--text-dim); }
   input:focus { border-color: var(--red); box-shadow: 0 0 0 3px rgba(229,38,31,0.08); }
   .btn-submit { margin-top: 8px; background: var(--red); color: #fff; border: none; border-radius: 8px; padding: 14px 24px; font-size: 14px; font-weight: 800; font-family: 'Inter', sans-serif; letter-spacing: 0.02em; cursor: pointer; transition: background 0.2s; width: 100%; text-transform: uppercase; }
@@ -60,92 +79,35 @@
   footer p { font-size: 11px; color: var(--text-dim); }
   footer a { font-size: 11px; color: var(--text-dim); text-decoration: none; }
   footer a:hover { color: var(--red); }
-
-  /* ── ERROR MODAL ── */
-  .modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.5);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
-  }
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
   .modal-overlay.active { display: flex; }
-  .modal {
-    background: #fff;
-    border-radius: 16px;
-    border: 1px solid rgba(229,38,31,0.2);
-    padding: 40px;
-    max-width: 440px;
-    width: 90%;
-    text-align: center;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-    animation: slideUp 0.25s ease;
-  }
+  .modal { background: var(--modal-bg); border-radius: 16px; border: 1px solid rgba(229,38,31,0.2); padding: 40px; max-width: 440px; width: 90%; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.15); animation: slideUp 0.25s ease; transition: background-color 0.3s ease; }
   @keyframes slideUp { from { opacity:0; transform: translateY(16px); } to { opacity:1; transform: translateY(0); } }
-  .modal-icon {
-    width: 56px; height: 56px;
-    border-radius: 50%;
-    background: rgba(229,38,31,0.08);
-    border: 1px solid rgba(229,38,31,0.2);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 24px;
-    margin: 0 auto 20px;
-  }
-  .modal-code {
-    display: inline-block;
-    background: #f1f5f9;
-    border-radius: 6px;
-    padding: 3px 10px;
-    font-size: 12px;
-    font-weight: 700;
-    font-family: monospace;
-    color: var(--red);
-    margin-bottom: 16px;
-    letter-spacing: 0.05em;
-  }
-  .modal h3 { font-size: 18px; font-weight: 800; margin-bottom: 10px; }
+  .modal-icon { width: 56px; height: 56px; border-radius: 50%; background: rgba(229,38,31,0.08); border: 1px solid rgba(229,38,31,0.2); display: flex; align-items: center; justify-content: center; font-size: 24px; margin: 0 auto 20px; }
+  .modal-code { display: inline-block; background: var(--surface); border-radius: 6px; padding: 3px 10px; font-size: 12px; font-weight: 700; font-family: monospace; color: var(--red); margin-bottom: 16px; letter-spacing: 0.05em; transition: background-color 0.3s ease; }
+  .modal h3 { font-size: 18px; font-weight: 800; margin-bottom: 10px; color: var(--text); }
   .modal p { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 28px; }
-  .modal-btn {
-    background: var(--red);
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    padding: 12px 28px;
-    font-size: 13px;
-    font-weight: 700;
-    font-family: 'Inter', sans-serif;
-    cursor: pointer;
-    width: 100%;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-  }
+  .modal-btn { background: var(--red); color: #fff; border: none; border-radius: 8px; padding: 12px 28px; font-size: 13px; font-weight: 700; font-family: 'Inter', sans-serif; cursor: pointer; width: 100%; text-transform: uppercase; letter-spacing: 0.04em; }
   .modal-btn:hover { background: var(--red-hover); }
-  .modal-incident {
-    margin-top: 12px;
-    font-size: 11px;
-    color: var(--text-dim);
-  }
+  .modal-incident { margin-top: 12px; font-size: 11px; color: var(--text-dim); }
   .modal-incident span { color: var(--red); font-weight: 700; }
-
   @media (max-width: 900px) {
     main { grid-template-columns: 1fr; }
     .hero-divider { display: none; }
     .hero, .form-panel { padding: 48px 32px; }
     header, footer { padding: 20px 32px; }
+    .header-left { gap: 16px; }
   }
 </style>
 </head>
 <body>
-
-<!-- HEADER -->
 <header>
-  <div class="logo">T<span>SOFT</span></div>
+  <div class="header-left">
+    <div class="logo">T<span>SOFT</span></div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">🌙</button>
+  </div>
   <span class="header-badge">Webinar · Agosto 2026</span>
 </header>
-
-<!-- MAIN -->
 <main>
   <section class="hero">
     <div class="hero-eyebrow">Webinar en vivo · LATAM · Gratuito</div>
@@ -163,32 +125,26 @@
       <div class="speaker"><div class="speaker-avatar">BR</div><div class="speaker-info"><h4>Brandon Rosadio</h4><p>Especialista JSM · TSOFT</p></div></div>
     </div>
   </section>
-
   <div class="hero-divider"></div>
-
   <section class="form-panel">
     <div class="form-header">
       <h2>Reservá tu lugar</h2>
       <p>Completá el formulario y te enviamos la confirmación y el link de acceso al webinar.</p>
     </div>
     <form onsubmit="handleSubmit(event)">
-      <div class="field"><label for="nombre">Nombre completo *</label><input type="text" id="nombre" placeholder="Juan García" required></div>
-      <div class="field"><label for="email">Email corporativo *</label><input type="email" id="email" placeholder="juan@empresa.com" required></div>
-      <div class="field"><label for="empresa">Empresa *</label><input type="text" id="empresa" placeholder="Nombre de tu empresa" required></div>
-      <div class="field"><label for="cargo">Cargo *</label><input type="text" id="cargo" placeholder="Tu cargo actual" required></div>
+      <div class="field"><label for="nombre">Nombre completo *</label><input type="text" id="nombre" placeholder="Juan García" required autocomplete="name"></div>
+      <div class="field"><label for="email">Email corporativo *</label><input type="email" id="email" placeholder="juan@empresa.com" required autocomplete="email"></div>
+      <div class="field"><label for="empresa">Empresa *</label><input type="text" id="empresa" placeholder="Nombre de tu empresa" required autocomplete="organization"></div>
+      <div class="field"><label for="cargo">Cargo *</label><input type="text" id="cargo" placeholder="Tu cargo actual" required autocomplete="organization-title"></div>
       <button type="submit" class="btn-submit">Registrarme al webinar</button>
       <p class="form-note">Al registrarte aceptás recibir información sobre el evento.<br>Sin spam. Podés darte de baja cuando quieras.</p>
     </form>
   </section>
 </main>
-
-<!-- FOOTER -->
 <footer>
   <p>© 2026 TSOFT SpA · Platinum Solution Partner Atlassian</p>
   <a href="https://tsoft.com.ar" target="_blank">tsoft.com.ar</a>
 </footer>
-
-<!-- ERROR MODAL -->
 <div class="modal-overlay" id="errorModal">
   <div class="modal">
     <div class="modal-icon">🔴</div>
@@ -199,8 +155,32 @@
     <p class="modal-incident">Incidente creado automáticamente · <span>INC-001</span></p>
   </div>
 </div>
-
 <script>
+  const html = document.documentElement;
+  const themeToggle = document.getElementById('themeToggle');
+  function initTheme() {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    if (savedTheme === 'dark') {
+      html.classList.add('dark');
+      themeToggle.textContent = '☀️';
+    } else {
+      html.classList.remove('dark');
+      themeToggle.textContent = '🌙';
+    }
+  }
+  themeToggle.addEventListener('click', () => {
+    const isDark = html.classList.contains('dark');
+    if (isDark) {
+      html.classList.remove('dark');
+      themeToggle.textContent = '🌙';
+      localStorage.setItem('theme', 'light');
+    } else {
+      html.classList.add('dark');
+      themeToggle.textContent = '☀️';
+      localStorage.setItem('theme', 'dark');
+    }
+  });
+  initTheme();
   function handleSubmit(e) {
     e.preventDefault();
     document.getElementById('errorModal').classList.add('active');
@@ -209,6 +189,5 @@
     document.getElementById('errorModal').classList.remove('active');
   }
 </script>
-
 </body>
 </html>
