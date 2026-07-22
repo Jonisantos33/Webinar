@@ -21,25 +21,11 @@
     --input-bg: #ffffff;
     --modal-bg: #ffffff;
   }
-  html.dark {
-    --bg: #0a0e1a;
-    --bg2: #0f1526;
-    --surface: #141b2e;
-    --border: rgba(255,255,255,0.08);
-    --text: #ffffff;
-    --text-muted: #94a3b8;
-    --text-dim: #94a3b8;
-    --input-bg: #141b2e;
-    --modal-bg: #141b2e;
-  }
   html { scroll-behavior: smooth; }
-  body { background: var(--bg); font-family: 'Inter', system-ui, sans-serif; color: var(--text); min-height: 100vh; display: grid; grid-template-rows: auto 1fr auto; transition: background 0.3s ease, color 0.3s ease; }
+  body { background: var(--bg); font-family: 'Inter', system-ui, sans-serif; color: var(--text); min-height: 100vh; display: grid; grid-template-rows: auto 1fr auto; }
   header { padding: 24px 48px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); background: var(--bg2); }
-  .header-left { display: flex; align-items: center; gap: 24px; }
   .logo { font-size: 20px; font-weight: 900; color: var(--text); letter-spacing: -0.02em; }
   .logo span { color: var(--red); }
-  .theme-toggle { width: 36px; height: 36px; border-radius: 50%; background: var(--surface); border: 1px solid var(--border); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: background 0.2s, border-color 0.2s; }
-  .theme-toggle:hover { background: var(--bg); }
   .header-badge { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red); border: 1px solid rgba(229,38,31,0.3); padding: 5px 12px; border-radius: 20px; background: var(--red-glow); }
   main { display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100vh - 80px - 60px); }
   .hero { padding: 80px 64px; display: flex; flex-direction: column; justify-content: center; }
@@ -97,10 +83,7 @@
 </head>
 <body>
 <header>
-  <div class="header-left">
-    <div class="logo">T<span>SOFT</span></div>
-    <button class="theme-toggle" id="themeToggle" aria-label="Cambiar modo oscuro/claro">🌙</button>
-  </div>
+  <div class="logo">T<span>SOFT</span></div>
   <span class="header-badge">Webinar · Agosto 2026</span>
 </header>
 <main>
@@ -151,30 +134,6 @@
   </div>
 </div>
 <script>
-  // Tema oscuro / claro
-  function initTheme() {
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    const html = document.documentElement;
-    
-    if (savedTheme === 'dark') {
-      html.classList.add('dark');
-      document.getElementById('themeToggle').textContent = '☀️';
-    } else {
-      html.classList.remove('dark');
-      document.getElementById('themeToggle').textContent = '🌙';
-    }
-  }
-  
-  document.getElementById('themeToggle').addEventListener('click', function() {
-    const html = document.documentElement;
-    const isDark = html.classList.toggle('dark');
-    const theme = isDark ? 'dark' : 'light';
-    
-    localStorage.setItem('theme', theme);
-    this.textContent = isDark ? '☀️' : '🌙';
-  });
-  
-  // Formulario
   function handleSubmit(e) {
     e.preventDefault();
     document.getElementById('errorModal').classList.add('active');
@@ -182,9 +141,6 @@
   function closeModal() {
     document.getElementById('errorModal').classList.remove('active');
   }
-  
-  // Inicializar tema al cargar la página
-  initTheme();
 </script>
 </body>
 </html>
