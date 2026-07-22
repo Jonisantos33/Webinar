@@ -21,8 +21,22 @@
     --input-bg: #ffffff;
     --modal-bg: #ffffff;
   }
+  html.dark {
+    --bg: #0a0e1a;
+    --bg2: #0f1526;
+    --surface: #141b2e;
+    --red: #E5261F;
+    --red-hover: #cc1f19;
+    --red-glow: rgba(229,38,31,0.08);
+    --border: rgba(255,255,255,0.08);
+    --text: #ffffff;
+    --text-muted: #94a3b8;
+    --text-dim: #94a3b8;
+    --input-bg: #141b2e;
+    --modal-bg: #141b2e;
+  }
   html { scroll-behavior: smooth; }
-  body { background: var(--bg); font-family: 'Inter', system-ui, sans-serif; color: var(--text); min-height: 100vh; display: grid; grid-template-rows: auto 1fr auto; }
+  body { background: var(--bg); font-family: 'Inter', system-ui, sans-serif; color: var(--text); min-height: 100vh; display: grid; grid-template-rows: auto 1fr auto; transition: background-color 0.3s ease, color 0.3s ease; }
   header { padding: 24px 48px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); background: var(--bg2); }
   .logo { font-size: 20px; font-weight: 900; color: var(--text); letter-spacing: -0.02em; }
   .logo span { color: var(--red); }
@@ -61,6 +75,9 @@
   footer p { font-size: 11px; color: var(--text-dim); }
   footer a { font-size: 11px; color: var(--text-dim); text-decoration: none; }
   footer a:hover { color: var(--red); }
+  .theme-toggle { background: var(--surface); border: 1px solid var(--border); border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background-color 0.2s, border-color 0.2s; font-size: 18px; }
+  .theme-toggle:hover { background: rgba(0,0,0,0.05); }
+  html.dark .theme-toggle:hover { background: rgba(255,255,255,0.1); }
   .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
   .modal-overlay.active { display: flex; }
   .modal { background: var(--modal-bg); border-radius: 16px; border: 1px solid rgba(229,38,31,0.2); padding: 40px; max-width: 440px; width: 90%; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.15); animation: slideUp 0.25s ease; }
@@ -84,6 +101,7 @@
 <body>
 <header>
   <div class="logo">T<span>SOFT</span></div>
+  <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema" title="Cambiar tema">🌙</button>
   <span class="header-badge">Webinar · Agosto 2026</span>
 </header>
 <main>
@@ -134,6 +152,49 @@
   </div>
 </div>
 <script>
+  // Inicializar tema al cargar la página
+  function initializeTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isDark = savedTheme === 'dark' || (savedTheme === null && prefersDark);
+    
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+      updateThemeToggle(true);
+    } else {
+      document.documentElement.classList.remove('dark');
+      updateThemeToggle(false);
+    }
+  }
+
+  function updateThemeToggle(isDark) {
+    const toggle = document.getElementById('themeToggle');
+    if (toggle) {
+      toggle.textContent = isDark ? '☀️' : '🌙';
+    }
+  }
+
+  function toggleTheme() {
+    const html = document.documentElement;
+    const isDark = html.classList.contains('dark');
+    
+    if (isDark) {
+      html.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+      updateThemeToggle(false);
+    } else {
+      html.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+      updateThemeToggle(true);
+    }
+  }
+
+  // Event listener para el toggle
+  document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+
+  // Inicializar tema al cargar
+  initializeTheme();
+
   function handleSubmit(e) {
     e.preventDefault();
     document.getElementById('errorModal').classList.add('active');
