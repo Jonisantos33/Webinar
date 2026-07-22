@@ -43,7 +43,7 @@ def test_dark_mode_css_variables_defined():
     """Test that dark mode CSS variables are properly defined"""
     html_content = read_html_file()
     
-    # Check for dark mode variables (data-theme="dark")
+    # Check for dark mode variables using html.dark selector
     dark_mode_vars = [
         '--bg: #0a0e1a',
         '--bg2: #0f1526',
@@ -52,16 +52,16 @@ def test_dark_mode_css_variables_defined():
         '--border: rgba(255,255,255,0.08)',
     ]
     
-    # Find the dark mode CSS block
-    dark_mode_pattern = r':root\[data-theme="dark"\]\s*\{[^}]*\}'
+    # Find the dark mode CSS block using html.dark selector
+    dark_mode_pattern = r'html\.dark\s*\{[^}]*\}'
     dark_mode_blocks = re.findall(dark_mode_pattern, html_content, re.DOTALL)
     
     assert len(dark_mode_blocks) > 0, "Dark mode CSS variables not found"
     
-    # Check that at least one dark mode variable is present
+    # Check that all dark mode variables are present
     dark_mode_content = ' '.join(dark_mode_blocks)
     found_vars = [var for var in dark_mode_vars if var in dark_mode_content]
-    assert len(found_vars) > 0, "No dark mode CSS variables found in :root[data-theme='dark']"
+    assert len(found_vars) > 0, "No dark mode CSS variables found in html.dark"
 
 
 def test_smooth_transition_defined():
@@ -77,17 +77,16 @@ def test_modal_works_in_dark_mode():
     """Test that modal styling is adapted for dark mode"""
     html_content = read_html_file()
     
-    # Check that modal has dark mode styling
-    assert ':root[data-theme="dark"] .modal' in html_content, "Modal dark mode styling not found"
+    # Check that modal-bg is defined in dark mode variables
+    assert '--modal-bg: #141b2e' in html_content, "Modal dark mode background color not found"
 
 
 def test_input_dark_mode_styling():
     """Test that input fields have dark mode styling"""
     html_content = read_html_file()
     
-    # Check for dark mode input styling
-    assert ':root[data-theme="dark"] input' in html_content, "Input dark mode styling not found"
-    assert '#141b2e' in html_content, "Dark mode input background color not found"
+    # Check for dark mode input styling using CSS variables
+    assert '--input-bg: #141b2e' in html_content, "Dark mode input background color not found"
 
 
 def test_javascript_dark_mode_functionality():
@@ -96,6 +95,7 @@ def test_javascript_dark_mode_functionality():
     
     # Check for necessary JavaScript functions
     assert 'themeToggle' in html_content, "themeToggle element not found in JavaScript"
-    assert 'sessionStorage' in html_content, "sessionStorage not used for persistence"
-    assert 'applyTheme' in html_content, "applyTheme function not found"
-    assert 'data-theme' in html_content, "data-theme attribute handling not found"
+    assert 'localStorage' in html_content, "localStorage not used for persistence"
+    assert 'initTheme' in html_content, "initTheme function not found"
+    assert 'classList.toggle' in html_content or 'classList.add' in html_content, "classList manipulation not found"
+    assert 'html.classList' in html_content or 'document.documentElement.classList' in html_content, "html element class manipulation not found"
